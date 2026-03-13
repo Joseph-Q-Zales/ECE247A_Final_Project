@@ -1,0 +1,46 @@
+[
+  {
+    "stage": "stage2",
+    "epoch": 1,
+    "noise": 18464,
+    "scale": 18464,
+    "time_shift_nonzero": 18094,
+    "left_right_flip": 4622,
+    "mixup": 10816,
+    "time_mask": 6485,
+    "channel_drop": 4589
+  },
+  {
+    "stage": "stage2",
+    "epoch": 2,
+    "noise": 18464,
+    "scale": 18464,
+    "time_shift_nonzero": 18095,
+    "left_right_flip": 4614,
+    "mixup": 11168,
+    "time_mask": 6479,
+    "channel_drop": 4653
+  },
+  {
+    "stage": "stage2",
+    "epoch": 3,
+    "noise": 18464,
+    "scale": 18464,
+    "time_shift_nonzero": 18104,
+    "left_right_flip": 4555,
+    "mixup": 10976,
+    "time_mask": 6354,
+    "channel_drop": 4481
+  },
+  {
+    "stage": "stage2",
+    "epoch": 4,
+    "noise": 18464,
+    "scale": 18464,
+    "time_shift_nonzero": 18134,
+    "left_right_flip": 4542,
+    "mixup": 11136,
+    "time_mask": 6423,
+    "channel_drop": 4714
+  }
+]

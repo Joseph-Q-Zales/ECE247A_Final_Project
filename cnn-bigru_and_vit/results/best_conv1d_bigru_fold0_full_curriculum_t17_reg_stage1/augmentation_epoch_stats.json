@@ -1,0 +1,211 @@
+[
+  {
+    "stage": "stage1",
+    "epoch": 1,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30720,
+    "left_right_flip": 7747,
+    "mixup": 19168,
+    "time_mask": 11019,
+    "channel_drop": 7769
+  },
+  {
+    "stage": "stage1",
+    "epoch": 2,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30673,
+    "left_right_flip": 7809,
+    "mixup": 18432,
+    "time_mask": 10943,
+    "channel_drop": 7782
+  },
+  {
+    "stage": "stage1",
+    "epoch": 3,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30682,
+    "left_right_flip": 7951,
+    "mixup": 19744,
+    "time_mask": 11056,
+    "channel_drop": 7866
+  },
+  {
+    "stage": "stage1",
+    "epoch": 4,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30660,
+    "left_right_flip": 7952,
+    "mixup": 18944,
+    "time_mask": 10922,
+    "channel_drop": 7823
+  },
+  {
+    "stage": "stage1",
+    "epoch": 5,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30674,
+    "left_right_flip": 7896,
+    "mixup": 19200,
+    "time_mask": 11031,
+    "channel_drop": 7912
+  },
+  {
+    "stage": "stage1",
+    "epoch": 6,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30680,
+    "left_right_flip": 7822,
+    "mixup": 17984,
+    "time_mask": 10895,
+    "channel_drop": 7857
+  },
+  {
+    "stage": "stage1",
+    "epoch": 7,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30676,
+    "left_right_flip": 7862,
+    "mixup": 18976,
+    "time_mask": 10970,
+    "channel_drop": 7807
+  },
+  {
+    "stage": "stage1",
+    "epoch": 8,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30698,
+    "left_right_flip": 7758,
+    "mixup": 18432,
+    "time_mask": 10816,
+    "channel_drop": 7781
+  },
+  {
+    "stage": "stage1",
+    "epoch": 9,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30653,
+    "left_right_flip": 7824,
+    "mixup": 19072,
+    "time_mask": 10934,
+    "channel_drop": 7842
+  },
+  {
+    "stage": "stage1",
+    "epoch": 10,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30722,
+    "left_right_flip": 7918,
+    "mixup": 18592,
+    "time_mask": 10855,
+    "channel_drop": 7980
+  },
+  {
+    "stage": "stage1",
+    "epoch": 11,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30705,
+    "left_right_flip": 7840,
+    "mixup": 18784,
+    "time_mask": 11036,
+    "channel_drop": 7773
+  },
+  {
+    "stage": "stage1",
+    "epoch": 12,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30654,
+    "left_right_flip": 7849,
+    "mixup": 18624,
+    "time_mask": 11093,
+    "channel_drop": 7782
+  },
+  {
+    "stage": "stage1",
+    "epoch": 13,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30659,
+    "left_right_flip": 7808,
+    "mixup": 19424,
+    "time_mask": 10905,
+    "channel_drop": 7840
+  },
+  {
+    "stage": "stage1",
+    "epoch": 14,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30678,
+    "left_right_flip": 7974,
+    "mixup": 18464,
+    "time_mask": 10922,
+    "channel_drop": 7939
+  },
+  {
+    "stage": "stage1",
+    "epoch": 15,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30707,
+    "left_right_flip": 7885,
+    "mixup": 19232,
+    "time_mask": 11100,
+    "channel_drop": 7817
+  },
+  {
+    "stage": "stage1",
+    "epoch": 16,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30706,
+    "left_right_flip": 7866,
+    "mixup": 18464,
+    "time_mask": 10856,
+    "channel_drop": 7756
+  },
+  {
+    "stage": "stage1",
+    "epoch": 17,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30685,
+    "left_right_flip": 7761,
+    "mixup": 18208,
+    "time_mask": 10972,
+    "channel_drop": 7750
+  },
+  {
+    "stage": "stage1",
+    "epoch": 18,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30658,
+    "left_right_flip": 7793,
+    "mixup": 19232,
+    "time_mask": 10881,
+    "channel_drop": 7939
+  },
+  {
+    "stage": "stage1",
+    "epoch": 19,
+    "noise": 31296,
+    "scale": 31296,
+    "time_shift_nonzero": 30660,
+    "left_right_flip": 7804,
+    "mixup": 17664,
+    "time_mask": 11153,
+    "channel_drop": 7785
+  }
+]

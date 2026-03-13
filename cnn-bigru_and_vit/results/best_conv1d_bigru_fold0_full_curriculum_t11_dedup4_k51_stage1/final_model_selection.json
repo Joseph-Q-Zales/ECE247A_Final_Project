@@ -1,0 +1,7 @@
+{
+  "chosen_stage": "stage1",
+  "chosen_kl": 0.8372426436133222,
+  "chosen_checkpoint": "/home/littl/ECE247A_Final_Project/JZ/models/best_conv1d_bigru_fold0_full_curriculum_t11_dedup4_k51_stage1_best.pt",
+  "stage1_best_kl": 0.8372426436133222,
+  "stage2_best_kl": Infinity
+}
