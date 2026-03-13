@@ -1,9 +1,73 @@
+# DISCLAIMER: docstrings created by ChatGPT and may require review for accuracy and completeness.
+
 from __future__ import annotations
 
-from typing import Callable, List, Tuple
+from typing import Callable, Dict, List, Tuple
 
 import numpy as np
 import torch
+
+AUG_COUNTER_KEYS = (
+    'noise',
+    'scale',
+    'time_shift_nonzero',
+    'left_right_flip',
+    'mixup',
+    'time_mask',
+    'channel_drop',
+)
+
+_AUG_COUNTERS: Dict[str, int] = {k: 0 for k in AUG_COUNTER_KEYS}
+
+# Channel remap for 16 bipolar channels in chain order:
+# [LL(0:4), RL(4:8), LP(8:12), RP(12:16)] -> swap left/right chains.
+_LR_FLIP_INDEX = np.array(
+    [4, 5, 6, 7, 0, 1, 2, 3, 12, 13, 14, 15, 8, 9, 10, 11],
+    dtype=np.int64,
+)
+
+
+def _inc_aug_counter(name: str, n: int = 1) -> None:
+    """Increment one augmentation counter in-process.
+
+    Parameters
+    ----------
+    name : str
+        Counter key.
+    n : int, default=1
+        Increment amount.
+
+    Returns
+    -------
+    None
+        Updates module-level counters.
+    """
+    if name not in _AUG_COUNTERS:
+        return
+    _AUG_COUNTERS[name] += int(max(0, n))
+
+
+def reset_augmentation_counters() -> None:
+    """Reset all augmentation counters to zero.
+
+    Returns
+    -------
+    None
+        Updates module-level counters in place.
+    """
+    for k in _AUG_COUNTERS:
+        _AUG_COUNTERS[k] = 0
+
+
+def get_augmentation_counters() -> Dict[str, int]:
+    """Return a snapshot of augmentation counters.
+
+    Returns
+    -------
+    dict
+        Counter dictionary keyed by augmentation name.
+    """
+    return {k: int(v) for k, v in _AUG_COUNTERS.items()}
 
 
 def _cfg_float(cfg, name: str, default: float) -> float:
@@ -91,6 +155,33 @@ def apply_time_shift(x: np.ndarray, shift: int) -> np.ndarray:
     return out
 
 
+def apply_left_right_flip(x: np.ndarray) -> np.ndarray:
+    """Swap left and right bipolar chains for 16-channel inputs.
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        Input signal array of shape ``(channels, time)``.
+
+    Returns
+    -------
+    numpy.ndarray
+        Left-right flipped signal with unchanged shape.
+    """
+    if x.ndim != 2:
+        return x
+    channels = int(x.shape[0])
+    if channels < int(_LR_FLIP_INDEX.shape[0]):
+        return x
+    if channels == int(_LR_FLIP_INDEX.shape[0]):
+        return x[_LR_FLIP_INDEX, :]
+
+    # Preserve any extra channels beyond the 16 bipolar channels.
+    out = x.copy()
+    out[:16, :] = x[_LR_FLIP_INDEX, :]
+    return out
+
+
 def augment_sample_np(x: np.ndarray, cfg, target_sample_rate: int) -> np.ndarray:
     """Apply per-sample raw EEG augmentations in numpy space.
 
@@ -113,19 +204,28 @@ def augment_sample_np(x: np.ndarray, cfg, target_sample_rate: int) -> np.ndarray
     scale_min = _cfg_float(cfg, 'aug_scale_min', 0.93)
     scale_max = _cfg_float(cfg, 'aug_scale_max', 1.07)
     max_shift_seconds = _cfg_float(cfg, 'aug_max_shift_seconds', 0.25)
+    left_right_flip_prob = _cfg_float(cfg, 'left_right_flip_prob', 0.15)
 
     if noise_std_max > 0:
         noise_std = np.random.uniform(noise_std_min, noise_std_max)
         x = x + np.random.normal(0.0, noise_std, size=x.shape).astype(np.float32)
+        _inc_aug_counter('noise', 1)
 
     if scale_max > 0:
         scale = np.random.uniform(scale_min, scale_max)
         x = x * scale
+        _inc_aug_counter('scale', 1)
 
     max_shift = max(0, int(round(max_shift_seconds * float(target_sample_rate))))
     if max_shift > 0:
         shift = np.random.randint(-max_shift, max_shift + 1)
         x = apply_time_shift(x, shift)
+        if shift != 0:
+            _inc_aug_counter('time_shift_nonzero', 1)
+
+    if left_right_flip_prob > 0.0 and np.random.rand() <= left_right_flip_prob:
+        x = apply_left_right_flip(x)
+        _inc_aug_counter('left_right_flip', 1)
 
     return x.astype(np.float32)
 
@@ -178,6 +278,7 @@ def apply_mixup_batch(
     votes_float = votes.to(dtype=x.dtype)
     votes_mix = lam * votes_float + (1.0 - lam) * votes_float[perm]
     votes_mix = votes_mix.to(dtype=votes.dtype)
+    _inc_aug_counter('mixup', bsz)
 
     return x_mix, y_mix, votes_mix
 
@@ -208,15 +309,20 @@ def apply_time_mask_batch(x: torch.Tensor, cfg) -> torch.Tensor:
     min_len = max(1, int(round(frac_min * seq_len)))
     max_len = max(min_len, int(round(frac_max * seq_len)))
 
+    masked = 0
     for i in range(bsz):
         if np.random.rand() > prob:
             continue
         span = np.random.randint(min_len, max_len + 1)
         if span >= seq_len:
             x[i, :, :] = 0
+            masked += 1
             continue
         start = np.random.randint(0, seq_len - span + 1)
         x[i, :, start:start + span] = 0
+        masked += 1
+    if masked > 0:
+        _inc_aug_counter('time_mask', masked)
     return x
 
 
@@ -246,12 +352,16 @@ def apply_channel_dropout_batch(x: torch.Tensor, cfg) -> torch.Tensor:
     if max_drop <= 0:
         return x
 
+    dropped = 0
     for i in range(bsz):
         if np.random.rand() > prob:
             continue
         n_drop = np.random.randint(1, max_drop + 1)
         drop_idx = np.random.choice(channels, size=n_drop, replace=False)
         x[i, drop_idx, :] = 0
+        dropped += 1
+    if dropped > 0:
+        _inc_aug_counter('channel_drop', dropped)
     return x
 
 
