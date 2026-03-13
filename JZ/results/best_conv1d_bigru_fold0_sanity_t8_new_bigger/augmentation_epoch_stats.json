@@ -1,0 +1,112 @@
+[
+  {
+    "stage": "stage1",
+    "epoch": 1,
+    "noise": 1984,
+    "scale": 1984,
+    "time_shift_nonzero": 1936,
+    "left_right_flip": 487,
+    "mixup": 992,
+    "time_mask": 691,
+    "channel_drop": 495
+  },
+  {
+    "stage": "stage1",
+    "epoch": 2,
+    "noise": 1984,
+    "scale": 1984,
+    "time_shift_nonzero": 1946,
+    "left_right_flip": 510,
+    "mixup": 1312,
+    "time_mask": 706,
+    "channel_drop": 473
+  },
+  {
+    "stage": "stage1",
+    "epoch": 3,
+    "noise": 1984,
+    "scale": 1984,
+    "time_shift_nonzero": 1946,
+    "left_right_flip": 491,
+    "mixup": 1088,
+    "time_mask": 699,
+    "channel_drop": 485
+  },
+  {
+    "stage": "stage1",
+    "epoch": 4,
+    "noise": 1984,
+    "scale": 1984,
+    "time_shift_nonzero": 1941,
+    "left_right_flip": 506,
+    "mixup": 1056,
+    "time_mask": 690,
+    "channel_drop": 516
+  },
+  {
+    "stage": "stage1",
+    "epoch": 5,
+    "noise": 1984,
+    "scale": 1984,
+    "time_shift_nonzero": 1931,
+    "left_right_flip": 504,
+    "mixup": 1184,
+    "time_mask": 706,
+    "channel_drop": 477
+  },
+  {
+    "stage": "stage1",
+    "epoch": 6,
+    "noise": 1984,
+    "scale": 1984,
+    "time_shift_nonzero": 1956,
+    "left_right_flip": 494,
+    "mixup": 1280,
+    "time_mask": 689,
+    "channel_drop": 504
+  },
+  {
+    "stage": "stage1",
+    "epoch": 7,
+    "noise": 1984,
+    "scale": 1984,
+    "time_shift_nonzero": 1953,
+    "left_right_flip": 513,
+    "mixup": 1216,
+    "time_mask": 686,
+    "channel_drop": 512
+  },
+  {
+    "stage": "stage1",
+    "epoch": 8,
+    "noise": 1984,
+    "scale": 1984,
+    "time_shift_nonzero": 1936,
+    "left_right_flip": 469,
+    "mixup": 1152,
+    "time_mask": 691,
+    "channel_drop": 485
+  },
+  {
+    "stage": "stage1",
+    "epoch": 9,
+    "noise": 1984,
+    "scale": 1984,
+    "time_shift_nonzero": 1941,
+    "left_right_flip": 504,
+    "mixup": 1120,
+    "time_mask": 712,
+    "channel_drop": 494
+  },
+  {
+    "stage": "stage1",
+    "epoch": 10,
+    "noise": 1984,
+    "scale": 1984,
+    "time_shift_nonzero": 1945,
+    "left_right_flip": 502,
+    "mixup": 1280,
+    "time_mask": 721,
+    "channel_drop": 498
+  }
+]
